@@ -7,11 +7,9 @@ A MySQL database for managing a bookstore's operations, designed and built colla
 
 ## Team Members and Responsibilities
 
-| Member | Role | Contribution |
-|--------|------|--------------|
 | Nelson Mwosa | Created ER Diagram and schema design |
 | Nwaonyeoma Kosisochukwu| Wrote SQL scripts to create tables and insert sample data |
-| Member 3 | Access Manager & Tester | Handled user roles, security, and test queries |
+| Oviscous Stacey | Handled user roles, security, and test queries |
 
 ---
 
