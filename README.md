@@ -22,7 +22,7 @@ A MySQL database for managing a bookstore's operations, designed and built colla
 
 ## Instructions to Run
 1. Clone the repo:  
-   `git clone https://github.com/your-username/bookstore-sql-project.git`
+   `git clone https://github.com/your-username/bookstore-sql-project.git](https://github.com/Kosiso845/Group-assignment-on-database-.git`
 2. Import schema using `create_tables.sql`
 3. Load sample data (optional)
 4. Run test queries from `test_queries.sql`
