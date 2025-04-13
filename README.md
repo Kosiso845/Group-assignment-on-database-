@@ -1,233 +1,85 @@
-# Group-assignment-on-database-
-CREATE DATABASE bookstoreDB;
-USE bookstoreDB;
-CREATE TABLE book (
-    book_id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    isbn VARCHAR(20),
-    language_id INT,
-    publisher_id INT,
-    publication_year YEAR
-);
- CREATE TABLE author (
-    author_id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL
-);
-CREATE TABLE book_author (
-    book_id INT,
-    author_id INT,
-    PRIMARY KEY (book_id, author_id),
-    FOREIGN KEY (book_id) REFERENCES book(book_id),
-    FOREIGN KEY (author_id) REFERENCES author(author_id)
-);
-CREATE TABLE customer (
-    customer_id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    email VARCHAR(100)
-);
-CREATE TABLE customer_address (
-    customer_id INT,
-    address_id INT,
-    PRIMARY KEY (customer_id, address_id),
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
-    FOREIGN KEY (address_id) REFERENCES address(address_id)
-);
-CREATE TABLE address (
-    address_id INT AUTO_INCREMENT PRIMARY KEY,
-    street_address VARCHAR(255),
-    city VARCHAR(100),
-    postal_code VARCHAR(20),
-    country_id INT
-);
-CREATE TABLE country (
-    country_id INT AUTO_INCREMENT PRIMARY KEY,
-    country_name VARCHAR(100) NOT NULL
-);CREATE TABLE cust_order (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT,
-    order_date DATE,
-    shipping_method_id INT,
-    order_status_id INT,
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
-);
-CREATE TABLE order_line (
-    order_line_id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT,
-    book_id INT,
-    quantity INT,
-    FOREIGN KEY (order_id) REFERENCES cust_order(order_id),
-    FOREIGN KEY (book_id) REFERENCES book(book_id)
-);
-CREATE TABLE order_status (
-    order_status_id INT AUTO_INCREMENT PRIMARY KEY,
-    status_name VARCHAR(100) NOT NULL
-);
-CREATE TABLE shipping_method (
-    shipping_method_id INT AUTO_INCREMENT PRIMARY KEY,
-    method_name VARCHAR(100) NOT NULL
-);
-CREATE TABLE book_language (
-    language_id INT AUTO_INCREMENT PRIMARY KEY,
-    language_name VARCHAR(100) NOT NULL
-);
+Database Design & Programming with SQL
 
-CREATE TABLE publisher (
-    publisher_id INT AUTO_INCREMENT PRIMARY KEY,
-    publisher_name VARCHAR(255) NOT NULL
-);
-CREATE TABLE address_status (
-    address_status_id INT AUTO_INCREMENT PRIMARY KEY,
-    status_name VARCHAR(100) NOT NULL
-);
-CREATE TABLE order_history (
-    history_id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT,
-    status_id INT,
-    change_date DATETIME NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES cust_order(order_id),
-    FOREIGN KEY (status_id) REFERENCES order_status(order_status_id)
-);
+Overview
 
-INSERT INTO book (book_id, title, isbn, language_id, publisher_id, publication_year)
-VALUES 
-(1, 'The Great Gatsby', '978-0743273565', 1, 1, 1925),
-(2, 'To Kill a Mockingbird', '978-0060935467', 2, 2, 1960),
-(3, '1984', '978-0451524935', 1, 3, 1949),
-(4, 'Moby-Dick', '978-1503280786', 3, 4, 1851),
-(5, 'Pride and Prejudice', '978-1503290563', 3, 5, 1813);
-INSERT INTO author (author_id, first_name, last_name)
-VALUES 
-(1, 'F. Scott', 'Fitzgerald'),
-(2, 'Harper', 'Lee'),
-(3, 'George', 'Orwell'),
-(4, 'Herman', 'Melville'),
-(5, 'Jane', 'Austen');
-INSERT INTO book_author (book_id, author_id)
-VALUES 
-(1, 1), -- 'The Great Gatsby' by F. Scott Fitzgerald
-(2, 2), -- 'To Kill a Mockingbird' by Harper Lee
-(3, 3), -- '1984' by George Orwell
-(4, 4), -- 'Moby-Dick' by Herman Melville
-(5, 5); -- 'Pride and Prejudice' by Jane Austen
-INSERT INTO customer (customer_id, first_name, last_name, email)
-VALUES 
-(1, 'John', 'Doe', 'john.doe@example.com'),
-(2, 'Jane', 'Smith', 'jane.smith@example.com'),
-(3, 'Michael', 'Johnson', 'michael.johnson@example.com'),
-(4, 'Emily', 'Davis', 'emily.davis@example.com'),
-(5, 'Chris', 'Wilson', 'chris.wilson@example.com');
-INSERT INTO customer_address (customer_id, address_id)
-VALUES 
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
-INSERT INTO address (address_id, street_address, city, postal_code, country_id)
-VALUES 
-(1, '123 Elm Street', 'Benin City', '300001', 1),
-(2, '456 Oak Avenue', 'Lagos', '100001', 2),
-(3, '789 Pine Drive', 'Abuja', '900001', 1),
-(4, '321 Maple Blvd', 'Port Harcourt', '500001', 3),
-(5, '654 Cedar Lane', 'Enugu', '400001', 1);
-INSERT INTO country (country_id, country_name)
-VALUES 
-(1, 'Nigeria'),
-(2, 'Ghana'),
-(3, 'Kenya'),
-(4, 'South Africa'),
-(5, 'Egypt');
-INSERT INTO cust_order (order_id, customer_id, order_date, shipping_method_id, order_status_id)
-VALUES 
-(1, 1, '2025-04-01', 1, 1),
-(2, 2, '2025-04-02', 2, 2),
-(3, 3, '2025-04-03', 3, 3),
-(4, 4, '2025-04-04', 1, 4),
-(5, 5, '2025-04-05', 2, 1);
-INSERT INTO order_line (order_line_id, order_id, book_id, quantity)
-VALUES 
-(1, 1, 1, 2),
-(2, 1, 2, 1),
-(3, 2, 3, 1),
-(4, 3, 4, 3),
-(5, 4, 5, 1);
-INSERT INTO order_status (order_status_id, status_name)
-VALUES 
-(1, 'Pending'),
-(2, 'Shipped'),
-(3, 'Delivered'),
-(4, 'Cancelled'),
-(5, 'Returned');
-INSERT INTO shipping_method (shipping_method_id, method_name)
-VALUES 
-(1, 'Standard Shipping'),
-(2, 'Express Shipping'),
-(3, 'Overnight Shipping'),
-(4, 'Pick-up'),
-(5, 'Drone Delivery');
-INSERT INTO book_language (language_id, language_name)
-VALUES 
-(1, 'English'),
-(2, 'French'),
-(3, 'Spanish'),
-(4, 'German'),
-(5, 'Italian');
-INSERT INTO publisher (publisher_id, publisher_name)
-VALUES 
-(1, 'Penguin Random House'),
-(2, 'HarperCollins'),
-(3, 'Macmillan Publishers'),
-(4, 'Simon & Schuster'),
-(5, 'Oxford University Press');
-INSERT INTO order_history (history_id, order_id, status_id, change_date)
-VALUES 
-(1, 1, 1, '2025-04-01 12:00:00'),
-(2, 1, 2, '2025-04-02 14:00:00'),
-(3, 2, 1, '2025-04-03 09:30:00'),
-(4, 2, 3, '2025-04-04 10:45:00'),
-(5, 3, 4, '2025-04-05 16:00:00');
-INSERT INTO book (book_id, title, isbn, language_id, publisher_id, publication_year)
-VALUES 
-(1, 'The Great Gatsby', '978-0743273565', 1, 1, 1925),
-(2, 'To Kill a Mockingbird', '978-0060935467', 1, 2, 1960),
-(3, '1984', '978-0451524935', 1, 3, 1949),
-(4, 'Moby-Dick', '978-1503280786', 3, 4, 1851),
-(5, 'Pride and Prejudice', '978-1503290563', 3, 5, 1813);
--- Create roles
--- Create Roles
-CREATE ROLE 'admin';
-CREATE ROLE 'client';
-CREATE ROLE 'employee';
-CREATE ROLE 'guest';
+In this project, you'll step into the role of a database administrator tasked with building a  MySQL database to store and manage data for a BookStore. By applying your skills in database design, table creation, data loading, and user management, you'll develop an organized system for this important real-world system. 
+This hands-on project provides valuable experience in efficiently structuring databases to handle large, complex data.
+Tools and Technologies
+MySQL - For building and managing the database
+Draw.io - For visualizing the database schema and relationships
 
--- Assign Privileges to Roles
-GRANT ALL PRIVILEGES ON bookstoreDB.* TO 'admin';
-GRANT SELECT, INSERT, UPDATE ON bookstoreDB.* TO 'client';
-GRANT SELECT, INSERT, UPDATE ON bookstoreDB.order_history TO 'employee';
-GRANT SELECT ON bookstoreDB.* TO 'guest';
+Prerequisites
+To successfully complete this project, you should be comfortable with:
+Understanding the basics of MySQL
+Creating tables in MySQL with the appropriate data types
+Managing MySQL users and applying security best practices
+Project Objective
+Your goal is to build a relational database that stores information about the bookstore's operations, including books, authors, customers, orders, shipping, and more. You will create a database that efficiently stores all necessary data and allows for quick retrieval and analysis.
 
--- Create Users
-CREATE USER 'admin'@'admin_pc' IDENTIFIED BY 'admin_password';
-CREATE USER 'client'@'client_device' IDENTIFIED BY 'client_password';
-CREATE USER 'employee1'@'employee1_laptop' IDENTIFIED BY 'employee1_password';
-CREATE USER 'employee2'@'employee2_laptop' IDENTIFIED BY 'employee2_password';
-CREATE USER 'guest'@'guest_device' IDENTIFIED BY 'guest_password';
+Step-by-Step Instructions
+Create a new database to store bookstore data.
+Determine the table schema and data types
+Write the SQL commands to create tables that match the data structure
+Set up user groups and roles to control access to the database
+Test the database by running queries to retrieve and analyze the data
 
--- Assign Roles to Users
-GRANT 'admin' TO 'admin'@'admin_pc';
-GRANT 'client' TO 'client'@'client_device';
-GRANT 'employee' TO 'employee1'@'employee1_laptop';
-GRANT 'employee' TO 'employee2'@'employee2_laptop';
-GRANT 'guest' TO 'guest'@'guest_device';
+Expected Outcomes
+By completing this SQL project, you'll gain practical experience and valuable, transferable skills, including:
+Designing and implementing a MySQL database for a real-world use case
+Creating tables with the optimal schema and data types for the dataset
+Managing database access through user groups and roles to ensure security
+Querying the data to extract meaningful insights 
 
--- Set Default Roles for Users
-SET DEFAULT ROLE 'admin'TO 'admin'@'admin_pc';
-SET DEFAULT ROLE 'client' TO 'client'@'client_device';
-SET DEFAULT ROLE 'employee' TO 'employee1'@'employee1_laptop';
-SET DEFAULT ROLE 'employee' TO 'employee2'@'employee2_laptop';
-SET DEFAULT ROLE 'guest' TO 'guest'@'guest_device';
+Tables to Be Created
+Here are the key tables that you'll design and implement for the bookstore database:
+book: A list of all books available in the store.
 
--- Apply Changes
-FLUSH PRIVILEGES;
+
+book_author: A table to manage the many-to-many relationship between books and authors.
+
+
+author: A list of all authors.
+
+
+book_language: A list of the possible languages of books.
+
+
+publisher: A list of publishers for books.
+
+
+Customer: A list of the bookstore's customers.
+
+
+customer_address: A list of addresses for customers. Each customer can have multiple addresses.
+
+
+address_status: A list of statuses for an address (e.g., current, old).
+
+
+address: A list of all addresses in the system.
+
+
+country: A list of countries where the addresses are located.
+
+
+cust_order: A list of orders placed by customers.
+
+
+order_line: A list of books that are part of each order.
+
+
+shipping_method: A list of possible shipping methods for an order.
+
+
+order_history: A record of the history of an order (e.g., ordered, cancelled, delivered).
+
+
+order_status: A list of possible statuses for an order (e.g., pending, shipped, delivered). 
+
+
+How to Submit.
+The group leader should create a GitHub repository.
+Deadline: 13/04/2025 11:59 pm EAT
+
+
+Submit the GitHub repo link here
